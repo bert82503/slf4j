@@ -8,16 +8,42 @@ import static org.slf4j.event.EventConstants.WARN_INT;
 
 /**
  * SLF4J's internal representation of Level.
- * 
+ * 日志级别的内部表示形式
  * 
  * @author Ceki G&uuml;lc&uuml;
  * @since 1.7.15
  */
 public enum Level {
 
-    ERROR(ERROR_INT, "ERROR"), WARN(WARN_INT, "WARN"), INFO(INFO_INT, "INFO"), DEBUG(DEBUG_INT, "DEBUG"), TRACE(TRACE_INT, "TRACE");
+    /**
+     * 错误
+     */
+    ERROR(ERROR_INT, "ERROR"),
+    /**
+     * 警告
+     */
+    WARN(WARN_INT, "WARN"),
+    /**
+     * 信息
+     */
+    INFO(INFO_INT, "INFO"),
+    /**
+     * 调试
+     */
+    DEBUG(DEBUG_INT, "DEBUG"),
+    /**
+     * 追踪
+     */
+    TRACE(TRACE_INT, "TRACE"),
+    ;
 
+    /**
+     * 等级的整数值
+     */
     private final int levelInt;
+    /**
+     * 等级的字符串值
+     */
     private final String levelStr;
 
     Level(int i, String s) {
