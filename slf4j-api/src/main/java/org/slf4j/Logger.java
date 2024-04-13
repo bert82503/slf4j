@@ -46,8 +46,10 @@ import org.slf4j.spi.NOPLoggingEventBuilder;
  * The org.slf4j.Logger interface is the main user entry point of SLF4J API.
  * It is expected that logging takes place through concrete implementations
  * of this interface.
+ * 日志记录者，本接口是SLF4J API的主要用户入口点。
  * 
  * <H3>Typical usage pattern:</H3>
+ * 典型使用模式
  * <pre>
  * import org.slf4j.Logger;
  * import org.slf4j.LoggerFactory;
@@ -88,17 +90,19 @@ public interface Logger {
      *
      * @since 1.3
      */
-    final public String ROOT_LOGGER_NAME = "ROOT";
+    String ROOT_LOGGER_NAME = "ROOT";
 
     /**
      * Return the name of this <code>Logger</code> instance.
+     * 日志记录者实例的名称
      * @return name of this logger instance 
      */
-    public String getName();
+    String getName();
 
     /**
      * <p>Make a new {@link LoggingEventBuilder} instance as appropriate for this logger implementation.
      * This default implementation always returns a new instance of {@link DefaultLoggingEventBuilder}.</p>
+     * 标记一个新的创建日志记录事件的构建者实例为这个日志实现
      * <p></p>
      * <p>This method is intended to be used by logging systems implementing the SLF4J API and <b>not</b>
      * by end users.</p>
@@ -111,7 +115,7 @@ public interface Logger {
      * @return a new {@link LoggingEventBuilder} instance as appropriate for <b>this</b> logger
      * @since 2.0
      */
-    default public LoggingEventBuilder makeLoggingEventBuilder(Level level) {
+    default LoggingEventBuilder makeLoggingEventBuilder(Level level) {
         return new DefaultLoggingEventBuilder(this, level);
     }
 
@@ -126,7 +130,7 @@ public interface Logger {
      * @since 2.0
      */
     @CheckReturnValue
-    default public LoggingEventBuilder atLevel(Level level) {
+    default LoggingEventBuilder atLevel(Level level) {
         if (isEnabledForLevel(level)) {
             return makeLoggingEventBuilder(level);
         } else {
@@ -142,7 +146,7 @@ public interface Logger {
      * @param level
      * @return true if enabled, false otherwise.
      */
-    default public boolean isEnabledForLevel(Level level) {
+    default boolean isEnabledForLevel(Level level) {
         int levelInt = level.toInt();
         switch (levelInt) {
         case (TRACE_INT):
@@ -167,7 +171,7 @@ public interface Logger {
      *         false otherwise.
      * @since 1.4
      */
-    public boolean isTraceEnabled();
+    boolean isTraceEnabled();
 
     /**
      * Log a message at the TRACE level.
@@ -175,7 +179,7 @@ public interface Logger {
      * @param msg the message string to be logged
      * @since 1.4
      */
-    public void trace(String msg);
+    void trace(String msg);
 
     /**
      * Log a message at the TRACE level according to the specified format
@@ -218,7 +222,7 @@ public interface Logger {
      * @param arguments a list of 3 or more arguments
      * @since 1.4
      */
-    public void trace(String format, Object... arguments);
+    void trace(String format, Object... arguments);
 
     /**
      * Log an exception (throwable) at the TRACE level with an
@@ -228,7 +232,7 @@ public interface Logger {
      * @param t   the exception (throwable) to log
      * @since 1.4
      */
-    public void trace(String msg, Throwable t);
+    void trace(String msg, Throwable t);
 
     /**
      * Similar to {@link #isTraceEnabled()} method except that the
@@ -249,7 +253,7 @@ public interface Logger {
      * @since 2.0
      */
     @CheckReturnValue
-    default public LoggingEventBuilder atTrace() {
+    default LoggingEventBuilder atTrace() {
         if (isTraceEnabled()) {
             return makeLoggingEventBuilder(TRACE);
         } else {
@@ -319,14 +323,14 @@ public interface Logger {
      * @return True if this Logger is enabled for the DEBUG level,
      *         false otherwise.
      */
-    public boolean isDebugEnabled();
+    boolean isDebugEnabled();
 
     /**
      * Log a message at the DEBUG level.
      *
      * @param msg the message string to be logged
      */
-    public void debug(String msg);
+    void debug(String msg);
 
     /**
      * Log a message at the DEBUG level according to the specified format
@@ -367,7 +371,7 @@ public interface Logger {
      * @param format    the format string
      * @param arguments a list of 3 or more arguments
      */
-    public void debug(String format, Object... arguments);
+    void debug(String format, Object... arguments);
 
     /**
      * Log an exception (throwable) at the DEBUG level with an
@@ -446,7 +450,7 @@ public interface Logger {
      * @since 2.0
      */
     @CheckReturnValue
-    default public LoggingEventBuilder atDebug() {
+    default LoggingEventBuilder atDebug() {
         if (isDebugEnabled()) {
             return makeLoggingEventBuilder(DEBUG);
         } else {
@@ -460,14 +464,14 @@ public interface Logger {
      * @return True if this Logger is enabled for the INFO level,
      *         false otherwise.
      */
-    public boolean isInfoEnabled();
+    boolean isInfoEnabled();
 
     /**
      * Log a message at the INFO level.
      *
      * @param msg the message string to be logged
      */
-    public void info(String msg);
+    void info(String msg);
 
     /**
      * Log a message at the INFO level according to the specified format
@@ -508,7 +512,7 @@ public interface Logger {
      * @param format    the format string
      * @param arguments a list of 3 or more arguments
      */
-    public void info(String format, Object... arguments);
+    void info(String format, Object... arguments);
 
     /**
      * Log an exception (throwable) at the INFO level with an
@@ -517,7 +521,7 @@ public interface Logger {
      * @param msg the message accompanying the exception
      * @param t   the exception (throwable) to log
      */
-    public void info(String msg, Throwable t);
+    void info(String msg, Throwable t);
 
     /**
      * Similar to {@link #isInfoEnabled()} method except that the marker
@@ -587,7 +591,7 @@ public interface Logger {
      * @since 2.0
      */
     @CheckReturnValue
-    default public LoggingEventBuilder atInfo() {
+    default LoggingEventBuilder atInfo() {
         if (isInfoEnabled()) {
             return makeLoggingEventBuilder(INFO);
         } else {
@@ -601,14 +605,14 @@ public interface Logger {
      * @return True if this Logger is enabled for the WARN level,
      *         false otherwise.
      */
-    public boolean isWarnEnabled();
+    boolean isWarnEnabled();
 
     /**
      * Log a message at the WARN level.
      *
      * @param msg the message string to be logged
      */
-    public void warn(String msg);
+    void warn(String msg);
 
     /**
      * Log a message at the WARN level according to the specified format
@@ -636,7 +640,7 @@ public interface Logger {
      * @param format    the format string
      * @param arguments a list of 3 or more arguments
      */
-    public void warn(String format, Object... arguments);
+    void warn(String format, Object... arguments);
 
     /**
      * Log a message at the WARN level according to the specified format
@@ -658,7 +662,7 @@ public interface Logger {
      * @param msg the message accompanying the exception
      * @param t   the exception (throwable) to log
      */
-    public void warn(String msg, Throwable t);
+    void warn(String msg, Throwable t);
 
     /**
      * Similar to {@link #isWarnEnabled()} method except that the marker
@@ -728,7 +732,7 @@ public interface Logger {
      * @since 2.0
      */
     @CheckReturnValue
-    default public LoggingEventBuilder atWarn() {
+    default LoggingEventBuilder atWarn() {
         if (isWarnEnabled()) {
             return makeLoggingEventBuilder(WARN);
         } else {
@@ -742,14 +746,14 @@ public interface Logger {
      * @return True if this Logger is enabled for the ERROR level,
      *         false otherwise.
      */
-    public boolean isErrorEnabled();
+    boolean isErrorEnabled();
 
     /**
      * Log a message at the ERROR level.
      *
      * @param msg the message string to be logged
      */
-    public void error(String msg);
+    void error(String msg);
 
     /**
      * Log a message at the ERROR level according to the specified format
@@ -790,7 +794,7 @@ public interface Logger {
      * @param format    the format string
      * @param arguments a list of 3 or more arguments
      */
-    public void error(String format, Object... arguments);
+    void error(String format, Object... arguments);
 
     /**
      * Log an exception (throwable) at the ERROR level with an
@@ -799,7 +803,7 @@ public interface Logger {
      * @param msg the message accompanying the exception
      * @param t   the exception (throwable) to log
      */
-    public void error(String msg, Throwable t);
+    void error(String msg, Throwable t);
 
     /**
      * Similar to {@link #isErrorEnabled()} method except that the
@@ -870,7 +874,7 @@ public interface Logger {
      * @since 2.0
      */
     @CheckReturnValue
-    default public LoggingEventBuilder atError() {
+    default LoggingEventBuilder atError() {
         if (isErrorEnabled()) {
             return makeLoggingEventBuilder(ERROR);
         } else {
