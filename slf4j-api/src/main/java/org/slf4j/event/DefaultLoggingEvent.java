@@ -9,6 +9,7 @@ import org.slf4j.Marker;
 
 /**
  * A default implementation of {@link LoggingEvent}.
+ * 日志事件的默认实现
  * 
  * @author Ceki G&uuml;lc&uuml;
  *
@@ -16,18 +17,48 @@ import org.slf4j.Marker;
  */
 public class DefaultLoggingEvent implements LoggingEvent {
 
+    /**
+     * 日志记录者实例
+     */
     Logger logger;
+    /**
+     * 级别
+     */
     Level level;
 
+    /**
+     * 格式化消息
+     */
     String message;
+    /**
+     * 日志事件中的标记者列表
+     */
     List<Marker> markers;
+    /**
+     * 参数列表
+     */
     List<Object> arguments;
+    /**
+     * 键值对列表
+     */
     List<KeyValuePair> keyValuePairs;
 
+    /**
+     * 根因的异常调用栈
+     */
     Throwable throwable;
+    /**
+     * 线程名称
+     */
     String threadName;
+    /**
+     * 创建时间戳
+     */
     long timeStamp;
-    
+
+    /**
+     * 调用者边界
+     */
     String callerBoundary;
 
     public DefaultLoggingEvent(Level level, Logger logger) {
@@ -57,6 +88,7 @@ public class DefaultLoggingEvent implements LoggingEvent {
 
     private List<Object> getNonNullArguments() {
         if (arguments == null) {
+            // 参数，一般不超过3个
             arguments = new ArrayList<>(3);
         }
         return arguments;
@@ -90,6 +122,11 @@ public class DefaultLoggingEvent implements LoggingEvent {
         return keyValuePairs;
     }
 
+    @Override
+    public Throwable getThrowable() {
+        return throwable;
+    }
+
     public void setThrowable(Throwable cause) {
         this.throwable = cause;
     }
@@ -111,11 +148,6 @@ public class DefaultLoggingEvent implements LoggingEvent {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    @Override
-    public Throwable getThrowable() {
-        return throwable;
     }
 
     public String getThreadName() {
