@@ -33,6 +33,7 @@ import org.slf4j.helpers.CheckReturnValue;
 /**
  * This is the main interface in slf4j's fluent API for creating
  * {@link org.slf4j.event.LoggingEvent logging events}.
+ * 日志记录事件构建者，创建日志记录事件。
  * 
  * @author Ceki G&uuml;lc&uuml;
  * @since 2.0.0
@@ -41,6 +42,7 @@ public interface LoggingEventBuilder {
 
     /**
      * Set the cause for the logging event being built.
+     * 设置日志记录事件的根因
      * @param cause a throwable
      * @return a LoggingEventBuilder, usually <b>this</b>.
      */
@@ -96,7 +98,8 @@ public interface LoggingEventBuilder {
     LoggingEventBuilder addKeyValue(String key, Supplier<Object> valueSupplier);
 
     /**
-     *  Sets the message of the logging event.
+     * Sets the message of the logging event.
+     * 设置日志记录事件的格式化消息
      *
      *  @since 2.0.0-beta0
      */
@@ -112,9 +115,12 @@ public interface LoggingEventBuilder {
     @CheckReturnValue
     LoggingEventBuilder setMessage(Supplier<String> messageSupplier);
 
+    // 日志记录
+
     /**
      * After the logging event is built, performs actual logging. This method must be called
      * for logging to occur.
+     * 生成日志记录事件后，执行实际日志记录。
      *
      * If the call to {@link #log()}  is omitted, a {@link org.slf4j.event.LoggingEvent LoggingEvent}
      * will be built but no logging will occur.

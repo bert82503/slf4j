@@ -3,7 +3,7 @@ package org.slf4j.event;
 import org.slf4j.spi.LocationAwareLogger;
 
 /**
- * 日志事件的常量池定义
+ * 日志记录事件的常量池定义
  */
 public class EventConstants {
     public static final int ERROR_INT = LocationAwareLogger.ERROR_INT;

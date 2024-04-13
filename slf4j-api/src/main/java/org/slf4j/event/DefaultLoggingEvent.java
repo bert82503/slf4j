@@ -9,7 +9,7 @@ import org.slf4j.Marker;
 
 /**
  * A default implementation of {@link LoggingEvent}.
- * 日志事件的默认实现
+ * 日志记录事件的默认实现
  * 
  * @author Ceki G&uuml;lc&uuml;
  *
@@ -31,7 +31,7 @@ public class DefaultLoggingEvent implements LoggingEvent {
      */
     String message;
     /**
-     * 日志事件中的标记者列表
+     * 日志记录事件中的标记者列表
      */
     List<Marker> markers;
     /**

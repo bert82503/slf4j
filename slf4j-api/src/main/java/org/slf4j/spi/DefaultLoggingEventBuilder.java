@@ -35,7 +35,7 @@ import org.slf4j.event.LoggingEvent;
 
 /**
  * Default implementation of {@link LoggingEventBuilder}
- * 创建日志事件的构建者的默认实现
+ * 创建日志记录事件的构建者的默认实现
  */
 public class DefaultLoggingEventBuilder implements LoggingEventBuilder, CallerBoundaryAware {
 
@@ -48,7 +48,7 @@ public class DefaultLoggingEventBuilder implements LoggingEventBuilder, CallerBo
     static String DLEB_FQCN = DefaultLoggingEventBuilder.class.getName();
 
     /**
-     * 日志事件的默认实现
+     * 日志记录事件的默认实现
      */
     protected DefaultLoggingEvent loggingEvent;
     /**
