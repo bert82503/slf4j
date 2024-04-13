@@ -35,15 +35,25 @@ import org.slf4j.event.LoggingEvent;
 
 /**
  * Default implementation of {@link LoggingEventBuilder}
+ * 创建日志事件的构建者的默认实现
  */
 public class DefaultLoggingEventBuilder implements LoggingEventBuilder, CallerBoundaryAware {
 
 
     // The caller boundary when the log() methods are invoked, is this class itself.
 
+    /**
+     * 调用者边界
+     */
     static String DLEB_FQCN = DefaultLoggingEventBuilder.class.getName();
 
+    /**
+     * 日志事件的默认实现
+     */
     protected DefaultLoggingEvent loggingEvent;
+    /**
+     * 日志记录者实例
+     */
     protected Logger logger;
 
     public DefaultLoggingEventBuilder(Logger logger, Level level) {
@@ -169,8 +179,6 @@ public class DefaultLoggingEventBuilder implements LoggingEventBuilder, CallerBo
     }
 
     private void logViaLocationAwareLoggerAPI(LocationAwareLogger locationAwareLogger, LoggingEvent aLoggingEvent) {
-        String msg = aLoggingEvent.getMessage();
-        List<Marker> markerList = aLoggingEvent.getMarkers();
         String mergedMessage = mergeMarkersAndKeyValuePairsAndMessage(aLoggingEvent);
         locationAwareLogger.log(null, aLoggingEvent.getCallerBoundary(), aLoggingEvent.getLevel().toInt(),
                                 mergedMessage,
@@ -194,7 +202,6 @@ public class DefaultLoggingEventBuilder implements LoggingEventBuilder, CallerBo
         }
 
         String mergedMessage = mergeMarkersAndKeyValuePairsAndMessage(aLoggingEvent);
-
 
         switch(aLoggingEvent.getLevel()) {
             case TRACE:
@@ -226,8 +233,7 @@ public class DefaultLoggingEventBuilder implements LoggingEventBuilder, CallerBo
     private String mergeMarkersAndKeyValuePairsAndMessage(LoggingEvent aLoggingEvent) {
         StringBuilder sb = mergeMarkers(aLoggingEvent.getMarkers(), null);
         sb = mergeKeyValuePairs(aLoggingEvent.getKeyValuePairs(), sb);
-        final String mergedMessage = mergeMessage(aLoggingEvent.getMessage(), sb);
-        return mergedMessage;
+        return mergeMessage(aLoggingEvent.getMessage(), sb);
     }
 
     private StringBuilder mergeMarkers(List<Marker> markerList, StringBuilder sb) {
@@ -268,10 +274,5 @@ public class DefaultLoggingEventBuilder implements LoggingEventBuilder, CallerBo
             return msg;
         }
     }
-
-
-
-
-
 
 }
