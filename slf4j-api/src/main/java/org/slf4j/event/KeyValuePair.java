@@ -2,9 +2,18 @@ package org.slf4j.event;
 
 import java.util.Objects;
 
+/**
+ * 键值对
+ */
 public class KeyValuePair {
 
+    /**
+     * 键
+     */
     public final String key;
+    /**
+     * 值
+     */
     public final Object value;
 
     public KeyValuePair(String key, Object value) {
@@ -14,7 +23,7 @@ public class KeyValuePair {
 
     @Override
     public String toString() {
-        return String.valueOf(key) + "=\"" + String.valueOf(value) +"\"";
+        return key + "=\"" + value +"\"";
     }
 
     @Override
