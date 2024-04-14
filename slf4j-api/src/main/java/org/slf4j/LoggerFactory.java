@@ -54,9 +54,11 @@ import org.slf4j.spi.SLF4JServiceProvider;
  * various logging APIs, e.g. logback, reload4j, log4j and JDK 1.4 logging.
  * Other implementations such as {@link org.slf4j.helpers.NOPLogger NOPLogger} and
  * SimpleLogger are also supported.
+ * LoggerFactory 是一个实用程序类，为各种日志记录 API 生成日志记录器。
  *
- * <p><code>LoggerFactory</code>  is essentially a wrapper around an
+ * <p><code>LoggerFactory</code> is essentially a wrapper around an
  * {@link ILoggerFactory} instance provided by a {@link SLF4JServiceProvider}.
+ * ILoggerFactory 实例由 SLF4JServiceProvider 提供。
  *
  * <p>
  * Please note that all methods in <code>LoggerFactory</code> are static.
@@ -96,7 +98,13 @@ public final class LoggerFactory {
     static final int SUCCESSFUL_INITIALIZATION = 3;
     static final int NOP_FALLBACK_INITIALIZATION = 4;
 
+    /**
+     * 初始化状态
+     */
     static volatile int INITIALIZATION_STATE = UNINITIALIZED;
+    /**
+     * 替代的服务查找提供者
+     */
     static final SubstituteServiceProvider SUBST_PROVIDER = new SubstituteServiceProvider();
     static final NOP_FallbackServiceProvider NOP_FALLBACK_SERVICE_PROVIDER = new NOP_FallbackServiceProvider();
 
@@ -106,6 +114,9 @@ public final class LoggerFactory {
 
     static boolean DETECT_LOGGER_NAME_MISMATCH = Util.safeGetBooleanSystemProperty(DETECT_LOGGER_NAME_MISMATCH_PROPERTY);
 
+    /**
+     * 服务查找提供者
+     */
     static volatile SLF4JServiceProvider PROVIDER;
 
     // Package access for tests
@@ -116,6 +127,7 @@ public final class LoggerFactory {
         // loaded the present class to search for services
         final ClassLoader classLoaderOfLoggerFactory = LoggerFactory.class.getClassLoader();
 
+        // 加载显式指定的日志记录器工厂
         SLF4JServiceProvider explicitProvider = loadExplicitlySpecified(classLoaderOfLoggerFactory);
         if(explicitProvider != null) {
             providerList.add(explicitProvider);
@@ -123,19 +135,24 @@ public final class LoggerFactory {
         }
 
 
-         ServiceLoader<SLF4JServiceProvider> serviceLoader = getServiceLoader(classLoaderOfLoggerFactory);
+        // 获取SLF4JServiceProvider的服务查找定位者
+        ServiceLoader<SLF4JServiceProvider> serviceLoader = getServiceLoader(classLoaderOfLoggerFactory);
 
+        // SLF4J服务提供者实例化
         Iterator<SLF4JServiceProvider> iterator = serviceLoader.iterator();
         while (iterator.hasNext()) {
+            // 安全地实例化
             safelyInstantiate(providerList, iterator);
         }
         return providerList;
     }
 
     private static ServiceLoader<SLF4JServiceProvider> getServiceLoader(final ClassLoader classLoaderOfLoggerFactory) {
+        // SLF4JServiceProvider的服务查找定位者
         ServiceLoader<SLF4JServiceProvider> serviceLoader;
         SecurityManager securityManager = System.getSecurityManager();
         if(securityManager == null) {
+            // 通过JDK服务定位者加载SLF4JServiceProvider
             serviceLoader = ServiceLoader.load(SLF4JServiceProvider.class, classLoaderOfLoggerFactory);
         } else {
             final PrivilegedAction<ServiceLoader<SLF4JServiceProvider>> action = () -> ServiceLoader.load(SLF4JServiceProvider.class, classLoaderOfLoggerFactory);
@@ -179,22 +196,28 @@ public final class LoggerFactory {
         INITIALIZATION_STATE = UNINITIALIZED;
     }
 
-    private final static void performInitialization() {
+    private static void performInitialization() {
+        // 绑定
         bind();
         if (INITIALIZATION_STATE == SUCCESSFUL_INITIALIZATION) {
             versionSanityCheck();
         }
     }
 
-    private final static void bind() {
+    private static void bind() {
         try {
+            // 查找服务提供者
             List<SLF4JServiceProvider> providersList = findServiceProviders();
+            // 警告：类路径包含多个SLF4J提供者
             reportMultipleBindingAmbiguity(providersList);
-            if (providersList != null && !providersList.isEmpty()) {
+            if (!providersList.isEmpty()) {
+                // 使用提供者列表中的第一个元素作为提供者
                 PROVIDER = providersList.get(0);
                 // SLF4JServiceProvider.initialize() is intended to be called here and nowhere else.
+                // 实例化
                 PROVIDER.initialize();
                 INITIALIZATION_STATE = SUCCESSFUL_INITIALIZATION;
+                // 报告实际绑定的提供者
                 reportActualBinding(providersList);
             } else {
                 INITIALIZATION_STATE = NOP_FALLBACK_INITIALIZATION;
@@ -202,6 +225,7 @@ public final class LoggerFactory {
                 Reporter.warn("Defaulting to no-operation (NOP) logger implementation");
                 Reporter.warn("See " + NO_PROVIDERS_URL + " for further details.");
 
+                // 静态日志记录器绑定者的路径集合
                 Set<URL> staticLoggerBinderPathSet = findPossibleStaticLoggerBinderPathSet();
                 reportIgnoredStaticLoggerBinders(staticLoggerBinderPathSet);
             }
@@ -250,12 +274,14 @@ public final class LoggerFactory {
 
     // We need to use the name of the StaticLoggerBinder class, but we can't
     // reference the class itself.
+    // 我们需要使用 StaticLoggerBinder 类的名称，但我们不能引用类本身。
     private static final String STATIC_LOGGER_BINDER_PATH = "org/slf4j/impl/StaticLoggerBinder.class";
 
     static Set<URL> findPossibleStaticLoggerBinderPathSet() {
         // use Set instead of list in order to deal with bug #138
         // LinkedHashSet appropriate here because it preserves insertion order
         // during iteration
+        // 静态日志记录器绑定者的路径集合
         Set<URL> staticLoggerBinderPathSet = new LinkedHashSet<>();
         try {
             ClassLoader loggerFactoryClassLoader = LoggerFactory.class.getClassLoader();
@@ -295,6 +321,7 @@ public final class LoggerFactory {
 
     static void failedBinding(Throwable t) {
         INITIALIZATION_STATE = FAILED_INITIALIZATION;
+        // 日志记录器工厂实例化失败
         Reporter.error("Failed to instantiate SLF4J LoggerFactory", t);
     }
 
@@ -390,10 +417,12 @@ public final class LoggerFactory {
     /**
      * Prints a warning message on the console if multiple bindings were found
      * on the class path. No reporting is done otherwise.
-     *
+     * 如果在类路径上找到多个绑定，则在控制台上打印警告消息；
+     * 否则，不会进行任何报告。
      */
     private static void reportMultipleBindingAmbiguity(List<SLF4JServiceProvider> providerList) {
         if (isAmbiguousProviderList(providerList)) {
+            // 警告：类路径包含多个SLF4J提供者
             Reporter.warn("Class path contains multiple SLF4J providers.");
             for (SLF4JServiceProvider provider : providerList) {
                 Reporter.warn("Found provider [" + provider + "]");
@@ -405,6 +434,7 @@ public final class LoggerFactory {
     private static void reportActualBinding(List<SLF4JServiceProvider> providerList) {
         // binderPathSet can be null under Android
         if (!providerList.isEmpty() && isAmbiguousProviderList(providerList)) {
+            // 报告实际绑定的提供者
             Reporter.info("Actual provider is of type [" + providerList.get(0) + "]");
         }
     }
@@ -418,6 +448,7 @@ public final class LoggerFactory {
      * @return logger
      */
     public static Logger getLogger(String name) {
+        // 日志记录器工厂
         ILoggerFactory iLoggerFactory = getILoggerFactory();
         return iLoggerFactory.getLogger(name);
     }
@@ -444,6 +475,7 @@ public final class LoggerFactory {
      *      logger name mismatch</a>
      */
     public static Logger getLogger(Class<?> clazz) {
+        // 类的完全限定名作为日志记录器的名称
         Logger logger = getLogger(clazz.getName());
         if (DETECT_LOGGER_NAME_MISMATCH) {
             Class<?> autoComputedCallingClass = Util.getCallingClass();
@@ -469,6 +501,7 @@ public final class LoggerFactory {
      * @return the ILoggerFactory instance in use
      */
     public static ILoggerFactory getILoggerFactory() {
+        // 服务提供者的日志记录器工厂
         return getProvider().getLoggerFactory();
     }
 
@@ -483,6 +516,7 @@ public final class LoggerFactory {
             synchronized (LoggerFactory.class) {
                 if (INITIALIZATION_STATE == UNINITIALIZED) {
                     INITIALIZATION_STATE = ONGOING_INITIALIZATION;
+                    // 执行初始化
                     performInitialization();
                 }
             }
