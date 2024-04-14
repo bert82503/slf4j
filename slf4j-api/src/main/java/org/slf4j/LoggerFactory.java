@@ -115,12 +115,13 @@ public final class LoggerFactory {
     static boolean DETECT_LOGGER_NAME_MISMATCH = Util.safeGetBooleanSystemProperty(DETECT_LOGGER_NAME_MISMATCH_PROPERTY);
 
     /**
-     * 服务查找提供者
+     * SLF4J服务提供者【核心】
      */
     static volatile SLF4JServiceProvider PROVIDER;
 
     // Package access for tests
     static List<SLF4JServiceProvider> findServiceProviders() {
+        // SLF4J服务提供者列表
         List<SLF4JServiceProvider> providerList = new ArrayList<>();
 
         // retain behaviour similar to that of 1.7 series and earlier. More specifically, use the class loader that
@@ -214,7 +215,7 @@ public final class LoggerFactory {
                 // 使用提供者列表中的第一个元素作为提供者
                 PROVIDER = providersList.get(0);
                 // SLF4JServiceProvider.initialize() is intended to be called here and nowhere else.
-                // 实例化
+                // 初始化
                 PROVIDER.initialize();
                 INITIALIZATION_STATE = SUCCESSFUL_INITIALIZATION;
                 // 报告实际绑定的提供者
