@@ -7,6 +7,7 @@ import org.slf4j.event.Level;
 
 /**
  * <p>A no-operation implementation of {@link LoggingEventBuilder}.</p>
+ * 日志记录事件构建者的无操作实现
  *
  * <p>As the name indicates, the method in this class do nothing, except when a return value is expected
  * in which case a singleton, i.e. the unique instance of this class is returned.
@@ -18,6 +19,9 @@ import org.slf4j.event.Level;
  */
 public class NOPLoggingEventBuilder implements LoggingEventBuilder {
 
+    /**
+     * 单例
+     */
     static final NOPLoggingEventBuilder SINGLETON = new NOPLoggingEventBuilder();
 
     private NOPLoggingEventBuilder() {
@@ -71,6 +75,7 @@ public class NOPLoggingEventBuilder implements LoggingEventBuilder {
     public LoggingEventBuilder setMessage(String message) {
         return this;
     }
+
     @Override
     public LoggingEventBuilder setMessage(Supplier<String> messageSupplier) {
         return this;
@@ -94,7 +99,6 @@ public class NOPLoggingEventBuilder implements LoggingEventBuilder {
 
     @Override
     public void log(String message, Object... args) {
-
     }
 
 }

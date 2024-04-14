@@ -31,6 +31,7 @@ import org.slf4j.Logger;
  * NOPLoggerFactory is a trivial implementation of {@link
  * ILoggerFactory} which always returns the unique instance of
  * NOPLogger.
+ * NOPLoggerFactory 是 ILoggerFactory 的一个简单实现，它始终返回 NOPLogger 的唯一实例。
  * 
  * @author Ceki G&uuml;lc&uuml;
  */
@@ -41,6 +42,7 @@ public class NOPLoggerFactory implements ILoggerFactory {
     }
 
     public Logger getLogger(String name) {
+        // 单例
         return NOPLogger.NOP_LOGGER;
     }
 

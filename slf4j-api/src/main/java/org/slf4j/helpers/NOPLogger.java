@@ -29,6 +29,7 @@ import org.slf4j.Marker;
 
 /**
  * A direct NOP (no operation) implementation of {@link Logger}.
+ * 无操作实现的日志记录者。
  *
  * @author Ceki G&uuml;lc&uuml;
  */
@@ -38,6 +39,7 @@ public class NOPLogger extends NamedLoggerBase implements Logger {
 
     /**
      * The unique instance of NOPLogger.
+     * 单例
      */
     public static final NOPLogger NOP_LOGGER = new NOPLogger();
 
