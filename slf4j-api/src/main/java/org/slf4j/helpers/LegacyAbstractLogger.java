@@ -4,6 +4,7 @@ import org.slf4j.Marker;
 
 /**
  * Provides minimal default implementations for {@link #isTraceEnabled(Marker)}, {@link #isDebugEnabled(Marker)} and other similar methods.
+ * 日志记录器实现，提供最少的默认实现。
  * 
  * @since 2.0
  */
