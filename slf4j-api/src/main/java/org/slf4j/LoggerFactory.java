@@ -508,7 +508,8 @@ public final class LoggerFactory {
 
     /**
      * Return the {@link SLF4JServiceProvider} in use.
-
+     * 返回使用中的SLF4J服务提供者实例
+     *
      * @return provider in use
      * @since 1.8.0
      */
@@ -524,6 +525,7 @@ public final class LoggerFactory {
         }
         switch (INITIALIZATION_STATE) {
         case SUCCESSFUL_INITIALIZATION:
+            // SLF4J服务提供者
             return PROVIDER;
         case NOP_FALLBACK_INITIALIZATION:
             return NOP_FALLBACK_SERVICE_PROVIDER;

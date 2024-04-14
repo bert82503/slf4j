@@ -31,8 +31,9 @@ import java.util.*;
 /**
  * Basic MDC implementation, which can be used with logging systems that lack
  * out-of-the-box MDC support.
+ * 基本的MDC适配者实现，可用于缺乏开箱即用 MDC 支持的日志记录系统。
  *
- * This code was initially inspired by  logback's LogbackMDCAdapter. However,
+ * This code was initially inspired by logback's LogbackMDCAdapter. However,
  * LogbackMDCAdapter has evolved and is now considerably more sophisticated.
  *
  * @author Ceki Gulcu
@@ -45,6 +46,9 @@ public class BasicMDCAdapter implements MDCAdapter {
 
     private final ThreadLocalMapOfStacks threadLocalMapOfDeques = new ThreadLocalMapOfStacks();
 
+    /**
+     * 可继承的现场本地变量的映射表
+     */
     private final InheritableThreadLocal<Map<String, String>> inheritableThreadLocalMap = new InheritableThreadLocal<Map<String, String>>() {
         @Override
         protected Map<String, String> childValue(Map<String, String> parentValue) {

@@ -30,6 +30,7 @@ import java.util.Map;
 /**
  * This interface abstracts the service offered by various MDC
  * implementations.
+ * MDC适配者，本接口抽象了各种 MDC 实现提供的服务。
  * 
  * @author Ceki G&uuml;lc&uuml;
  * @since 1.4.1
@@ -41,11 +42,12 @@ public interface MDCAdapter {
      * the <code>key</code> parameter into the current thread's context map. 
      * The <code>key</code> parameter cannot be null. The <code>val</code> parameter
      * can be null only if the underlying implementation supports it.
+     * 将与 key 参数标识的上下文值（val 参数）放入当前线程的上下文映射中。
      * 
      * <p>If the current thread does not have a context map it is created as a side
      * effect of this call.
      */
-    public void put(String key, String val);
+    void put(String key, String val);
 
     /**
      * Get the context identified by the <code>key</code> parameter.
@@ -53,7 +55,7 @@ public interface MDCAdapter {
      * 
      * @return the string value identified by the <code>key</code> parameter.
      */
-    public String get(String key);
+    String get(String key);
 
     /**
      * Remove the context identified by the <code>key</code> parameter.
@@ -63,26 +65,30 @@ public interface MDCAdapter {
      * This method does nothing if there is no previous value 
      * associated with <code>key</code>.
      */
-    public void remove(String key);
+    void remove(String key);
 
     /**
      * Clear all entries in the MDC.
+     * 清除 MDC 中的所有条目。
      */
-    public void clear();
+    void clear();
 
     /**
      * Return a copy of the current thread's context map, with keys and 
      * values of type String. Returned value may be null.
+     * 返回当前线程的上下文映射的副本，其中包含字符串类型的键和值。
+     * 返回值可能为 null。
      * 
      * @return A copy of the current thread's context map. May be null.
      * @since 1.5.1
      */
-    public Map<String, String> getCopyOfContextMap();
+    Map<String, String> getCopyOfContextMap();
 
     /**
      * Set the current thread's context map by first clearing any existing 
      * map and then copying the map passed as parameter. The context map 
      * parameter must only contain keys and values of type String.
+     * 通过首先清除任何现有映射，然后复制作为参数传递的映射来设置当前线程的上下文映射。
      * 
      * Implementations must support null valued map passed as parameter.
      * 
@@ -90,7 +96,7 @@ public interface MDCAdapter {
      * 
      * @since 1.5.1
      */
-    public void setContextMap(Map<String, String> contextMap);
+    void setContextMap(Map<String, String> contextMap);
     
     /**
      * Push a value into the deque(stack) referenced by 'key'.
