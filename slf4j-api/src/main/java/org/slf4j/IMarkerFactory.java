@@ -27,6 +27,7 @@ package org.slf4j;
 /**
  * Implementations of this interface are used to manufacture {@link Marker}
  * instances.
+ * 本接口的实现用于制造 Marker 实例。
  * 
  * <p>See the section <a href="http://slf4j.org/faq.html#3">Implementing 
  * the SLF4J API</a> in the FAQ for details on how to make your logging 
