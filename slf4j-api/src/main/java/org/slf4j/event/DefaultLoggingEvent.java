@@ -18,7 +18,7 @@ import org.slf4j.Marker;
 public class DefaultLoggingEvent implements LoggingEvent {
 
     /**
-     * 日志记录者实例
+     * 日志记录器实例
      */
     Logger logger;
     /**

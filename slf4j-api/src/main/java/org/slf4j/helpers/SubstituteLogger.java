@@ -39,6 +39,8 @@ import org.slf4j.spi.LoggingEventBuilder;
 /**
  * A logger implementation which logs via a delegate logger. By default, the delegate is a
  * {@link NOPLogger}. However, a different delegate can be set at any time.
+ * 替代的日志记录器实例，通过委托记录器进行日志记录的记录器实现。
+ * 默认情况下，委托是 NOPLogger。但是，可以随时设置不同的委托。
  * 
  * <p>See also the <a href="http://www.slf4j.org/codes.html#substituteLogger">relevant
  * error code</a> documentation.
@@ -49,10 +51,16 @@ import org.slf4j.spi.LoggingEventBuilder;
 public class SubstituteLogger implements Logger {
 
     private final String name;
+    /**
+     * 委托的日志记录器实例
+     */
     private volatile Logger _delegate;
     private Boolean delegateEventAware;
     private Method logMethodCache;
     private EventRecordingLogger eventRecordingLogger;
+    /**
+     * 替代的日志记录事件的队列
+     */
     private final Queue<SubstituteLoggingEvent> eventQueue;
 
     public final boolean createdPostInitialization;
@@ -432,6 +440,7 @@ public class SubstituteLogger implements Logger {
     /**
      * Return the delegate logger instance if set. Otherwise, return a {@link NOPLogger}
      * instance.
+     * 返回委托的日志记录器实例
      */
     public Logger delegate() {
         if (_delegate != null) {

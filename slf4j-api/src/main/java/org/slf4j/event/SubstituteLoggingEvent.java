@@ -7,18 +7,51 @@ import java.util.List;
 import org.slf4j.Marker;
 import org.slf4j.helpers.SubstituteLogger;
 
+/**
+ * 替代的日志记录事件，用户把数据传递给SLF4J API的最小接口。
+ */
 public class SubstituteLoggingEvent implements LoggingEvent {
 
+    /**
+     * 级别
+     */
     Level level;
+    /**
+     * 日志记录事件中的标记者列表
+     */
     List<Marker> markers;
+    /**
+     * 日志记录器实例的名称
+     */
     String loggerName;
+    /**
+     * 替代的日志记录器实例
+     */
     SubstituteLogger logger;
+    /**
+     * 线程名称
+     */
     String threadName;
+    /**
+     * 格式化消息
+     */
     String message;
+    /**
+     * 参数数组
+     */
     Object[] argArray;
+    /**
+     * 键值对列表
+     */
     List<KeyValuePair> keyValuePairList;
 
+    /**
+     * 创建时间戳
+     */
     long timeStamp;
+    /**
+     * 根因的异常调用栈实例
+     */
     Throwable throwable;
 
     public Level getLevel() {

@@ -29,7 +29,7 @@ import org.slf4j.Marker;
 
 /**
  * A direct NOP (no operation) implementation of {@link Logger}.
- * 无操作实现的日志记录者。
+ * 无操作实现的日志记录器。
  *
  * @author Ceki G&uuml;lc&uuml;
  */

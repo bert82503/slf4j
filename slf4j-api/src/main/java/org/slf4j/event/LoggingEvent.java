@@ -20,7 +20,7 @@ public interface LoggingEvent {
     Level getLevel();
 
     /**
-     * @return 日志记录者实例的名称
+     * @return 日志记录器实例的名称
      */
     String getLoggerName();
 

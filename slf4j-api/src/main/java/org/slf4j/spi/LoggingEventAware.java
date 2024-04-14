@@ -4,6 +4,7 @@ import org.slf4j.event.LoggingEvent;
 
 /**
  * A logger capable of logging from org.slf4j.event.LoggingEvent implements this interface.
+ * 日志记录事件实现的感知器
  *
  * <p>Please note that when the {@link #log(LoggingEvent)} method assumes that
  * the event was filtered beforehand and no further filtering needs to occur by the method itself.
@@ -19,5 +20,6 @@ import org.slf4j.event.LoggingEvent;
  * @since 2.0.0
  */
 public interface LoggingEventAware {
+
     void log(LoggingEvent event);
 }

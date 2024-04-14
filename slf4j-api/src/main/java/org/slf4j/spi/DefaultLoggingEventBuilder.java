@@ -52,7 +52,7 @@ public class DefaultLoggingEventBuilder implements LoggingEventBuilder, CallerBo
      */
     protected DefaultLoggingEvent loggingEvent;
     /**
-     * 日志记录者实例
+     * 日志记录器实例
      */
     protected Logger logger;
 
