@@ -4,6 +4,7 @@ import org.slf4j.event.LoggingEvent;
 
 /**
  * Holds normalized call parameters.
+ * 保存规范化的调用参数。
  * 
  * Includes utility methods such as {@link #normalize(String, Object[], Throwable)} to help the normalization of parameters.
  * 
@@ -12,8 +13,17 @@ import org.slf4j.event.LoggingEvent;
  */
 public class NormalizedParameters {
 
+    /**
+     * 格式化参数
+     */
     final String message;
+    /**
+     * 参数数组
+     */
     final Object[] arguments;
+    /**
+     * 根因的异常调用栈实例
+     */
     final Throwable throwable;
 
     public NormalizedParameters(String message, Object[] arguments, Throwable throwable) {
@@ -52,6 +62,7 @@ public class NormalizedParameters {
             return null;
         }
 
+        // 最后一个是异常实例参数么？
         final Object lastEntry = argArray[argArray.length - 1];
         if (lastEntry instanceof Throwable) {
             return (Throwable) lastEntry;
@@ -62,6 +73,7 @@ public class NormalizedParameters {
 
     /**
      * Helper method to get all but the last element of an array
+     * 获取数组中除最后一个元素之外的所有元素
      *
      * @param argArray The arguments from which we want to remove the last element
      *
@@ -99,6 +111,7 @@ public class NormalizedParameters {
             return new NormalizedParameters(msg, arguments, t);
         }
 
+        // 根因的异常调用栈实例
         Throwable throwableCandidate = NormalizedParameters.getThrowableCandidate(arguments);
         if (throwableCandidate != null) {
             Object[] trimmedArguments = MessageFormatter.trimmedCopy(arguments);

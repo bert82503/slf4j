@@ -33,6 +33,7 @@ import java.util.Map;
 /**
  * Formats messages according to very simple substitution rules. Substitutions
  * can be made 1, 2 or more arguments.
+ * 格式化消息
  *
  * <p>
  * For example,
@@ -98,6 +99,9 @@ import java.util.Map;
 final public class MessageFormatter {
     static final char DELIM_START = '{';
     static final char DELIM_STOP = '}';
+    /**
+     * 分隔符
+     */
     static final String DELIM_STR = "{}";
     private static final char ESCAPE_CHAR = '\\';
 
@@ -152,6 +156,7 @@ final public class MessageFormatter {
     }
 
     final public static FormattingTuple arrayFormat(final String messagePattern, final Object[] argArray) {
+        // 根因的异常调用栈实例
         Throwable throwableCandidate = MessageFormatter.getThrowableCandidate(argArray);
         Object[] args = argArray;
         if (throwableCandidate != null) {
@@ -412,6 +417,7 @@ final public class MessageFormatter {
      *          otherwise it returns null
      */
     public static Throwable getThrowableCandidate(final Object[] argArray) {
+        // 最后一个是异常实例参数么？
         return NormalizedParameters.getThrowableCandidate(argArray);
     }
 
@@ -424,6 +430,7 @@ final public class MessageFormatter {
      * @return a copy of the array without the last element
      */
     public static Object[] trimmedCopy(final Object[] argArray) {
+        // 获取数组中除最后一个元素之外的所有元素
         return NormalizedParameters.trimmedCopy(argArray);
     }
 

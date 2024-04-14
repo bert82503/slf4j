@@ -26,6 +26,7 @@ package org.slf4j.helpers;
 
 /**
  * Holds the results of formatting done by {@link MessageFormatter}.
+ * 消息格式化的元组
  * 
  * @author Joern Huxhorn
  */
@@ -33,8 +34,17 @@ public class FormattingTuple {
 
     static public FormattingTuple NULL = new FormattingTuple(null);
 
+    /**
+     * 格式化消息
+     */
     private final String message;
+    /**
+     * 根因的异常调用栈实例
+     */
     private final Throwable throwable;
+    /**
+     * 参数数组
+     */
     private final Object[] argArray;
 
     public FormattingTuple(String message) {
