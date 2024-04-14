@@ -46,7 +46,7 @@ import org.slf4j.spi.NOPLoggingEventBuilder;
  * The org.slf4j.Logger interface is the main user entry point of SLF4J API.
  * It is expected that logging takes place through concrete implementations
  * of this interface.
- * 日志记录者，本接口是SLF4J API的主要用户入口点。
+ * 日志记录器，本接口是SLF4J API的主要用户入口点。
  * 
  * <H3>Typical usage pattern:</H3>
  * 典型使用模式
@@ -94,7 +94,7 @@ public interface Logger {
 
     /**
      * Return the name of this <code>Logger</code> instance.
-     * 日志记录者实例的名称
+     * 日志记录器实例的名称
      * @return name of this logger instance 
      */
     String getName();

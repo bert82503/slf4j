@@ -27,6 +27,7 @@ package org.slf4j;
 /**
  * <code>ILoggerFactory</code> instances manufacture {@link Logger}
  * instances by name.
+ * 日志记录器工厂，ILoggerFactory 实例按名称生成 Logger 实例。
  * 
  * <p>Most users retrieve {@link Logger} instances through the static
  * {@link LoggerFactory#getLogger(String)} method. An instance of this
@@ -40,6 +41,7 @@ public interface ILoggerFactory {
     /**
      * Return an appropriate {@link Logger} instance as specified by the
      * <code>name</code> parameter.
+     * 返回 name 参数指定的相应 Logger 实例。
      * 
      * <p>If the name parameter is equal to {@link Logger#ROOT_LOGGER_NAME}, that is 
      * the string value "ROOT" (case insensitive), then the root logger of the 
@@ -53,5 +55,5 @@ public interface ILoggerFactory {
      * @param name the name of the Logger to return
      * @return a Logger instance 
      */
-    public Logger getLogger(String name);
+    Logger getLogger(String name);
 }
