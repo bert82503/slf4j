@@ -52,6 +52,7 @@ public interface MDCAdapter {
     /**
      * Get the context identified by the <code>key</code> parameter.
      * The <code>key</code> parameter cannot be null.
+     * 获取由键参数标识的诊断上下文。
      * 
      * @return the string value identified by the <code>key</code> parameter.
      */

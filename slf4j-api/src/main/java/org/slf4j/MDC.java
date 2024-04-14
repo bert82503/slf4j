@@ -31,13 +31,13 @@ import java.util.Map;
 import org.slf4j.helpers.BasicMDCAdapter;
 import org.slf4j.helpers.NOPMDCAdapter;
 import org.slf4j.helpers.Reporter;
-import org.slf4j.helpers.Util;
 import org.slf4j.spi.MDCAdapter;
 import org.slf4j.spi.SLF4JServiceProvider;
 
 /**
  * This class hides and serves as a substitute for the underlying logging
  * system's MDC implementation.
+ * 本类隐藏并用作基础日志记录系统的 MDC 实现的替代。
  * 
  * <p>
  * If the underlying logging system offers MDC functionality, then SLF4J's MDC,
@@ -68,6 +68,9 @@ public class MDC {
     static final String NULL_MDCA_URL = "http://www.slf4j.org/codes.html#null_MDCA";
     private static final String MDC_APAPTER_CANNOT_BE_NULL_MESSAGE = "MDCAdapter cannot be null. See also " + NULL_MDCA_URL;
     static final String NO_STATIC_MDC_BINDER_URL = "http://www.slf4j.org/codes.html#no_static_mdc_binder";
+    /**
+     * MDC适配者
+     */
     static MDCAdapter mdcAdapter;
 
     /**
@@ -89,11 +92,13 @@ public class MDC {
     }
 
     static {
+        // SLF4J服务提供者实例
         SLF4JServiceProvider provider = LoggerFactory.getProvider();
         if (provider != null) {
             // obtain and attach the MDCAdapter from the provider
             // If you wish to change the adapter, Setting the MDC.mdcAdapter variable might not be enough as
             // the provider might perform additional assignments that you would need to replicate/adapt.
+            // MDC 应绑定到的 MDCAdapter 实例
             mdcAdapter = provider.getMDCAdapter();
         } else {
             Reporter.error("Failed to find provider.");
@@ -107,6 +112,7 @@ public class MDC {
      * <code>key</code> parameter into the current thread's diagnostic context map. The
      * <code>key</code> parameter cannot be null. The <code>val</code> parameter
      * can be null only if the underlying implementation supports it.
+     * 将与 key 参数标识的上下文值（val 参数）放入当前线程的上下文映射中。
      * 
      * <p>
      * This method delegates all work to the MDC of the underlying logging system.
@@ -163,6 +169,7 @@ public class MDC {
     /**
      * Get the diagnostic context identified by the <code>key</code> parameter. The
      * <code>key</code> parameter cannot be null.
+     * 获取由键参数标识的诊断上下文。
      * 
      * <p>
      * This method delegates all work to the MDC of the underlying logging system.
@@ -206,6 +213,7 @@ public class MDC {
 
     /**
      * Clear all entries in the MDC of the underlying implementation.
+     * 清除 MDC 中的所有条目。
      */
     public static void clear() {
         if (mdcAdapter == null) {
@@ -217,6 +225,8 @@ public class MDC {
     /**
      * Return a copy of the current thread's context map, with keys and values of
      * type String. Returned value may be null.
+     * 返回当前线程的上下文映射的副本，其中包含字符串类型的键和值。
+     * 返回值可能为 null。
      * 
      * @return A copy of the current thread's context map. May be null.
      * @since 1.5.1
@@ -232,6 +242,7 @@ public class MDC {
      * Set the current thread's context map by first clearing any existing map and
      * then copying the map passed as parameter. The context map passed as
      * parameter must only contain keys and values of type String.
+     * 通过首先清除任何现有映射，然后复制作为参数传递的映射来设置当前线程的上下文映射。
      * 
      * Null valued argument is allowed (since SLF4J version 2.0.0).
      * 
@@ -248,6 +259,7 @@ public class MDC {
 
     /**
      * Returns the MDCAdapter instance currently in use.
+     * 返回当前正在使用的 MDCAdapter 实例。
      * 
      * @return the MDcAdapter instance currently in use.
      * @since 1.4.2
