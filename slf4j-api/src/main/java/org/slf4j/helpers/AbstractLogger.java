@@ -35,6 +35,7 @@ import org.slf4j.event.Level;
 /**
  * An abstract implementation which delegates actual logging work to the 
  * {@link #handleNormalizedLoggingCall(Level, Marker, String, Object[], Throwable)} method.
+ * 日志记录器的抽象实现，将实际的日志记录工作委托给{@link #handleNormalizedLoggingCall(Level, Marker, String, Object[], Throwable)}方法。
  * 
  * @author Ceki G&uuml;lc&uuml;
  * @since 2.0
@@ -43,6 +44,9 @@ public abstract class AbstractLogger implements Logger, Serializable {
 
     private static final long serialVersionUID = -2529255052481744503L;
 
+    /**
+     * 日志记录器实例的名称
+     */
     protected String name;
 
     public String getName() {
@@ -66,6 +70,7 @@ public abstract class AbstractLogger implements Logger, Serializable {
     protected Object readResolve() throws ObjectStreamException {
         // using getName() instead of this.name works even for
         // NOPLogger
+        // 返回日志记录器实例
         return LoggerFactory.getLogger(getName());
     }
 
@@ -378,6 +383,8 @@ public abstract class AbstractLogger implements Logger, Serializable {
         }
     }
 
+    // 处理参数化调用
+
     private void handle_0ArgsCall(Level level, Marker marker, String msg, Throwable t) {
         handleNormalizedLoggingCall(level, marker, msg, null, t);
     }
@@ -395,6 +402,7 @@ public abstract class AbstractLogger implements Logger, Serializable {
     }
 
     private void handleArgArrayCall(Level level, Marker marker, String msg, Object[] args) {
+        // 根因的异常调用栈实例
         Throwable throwableCandidate = MessageFormatter.getThrowableCandidate(args);
         if (throwableCandidate != null) {
             Object[] trimmedCopy = MessageFormatter.trimmedCopy(args);
@@ -408,6 +416,7 @@ public abstract class AbstractLogger implements Logger, Serializable {
 
     /**
      * Given various arguments passed as parameters, perform actual logging.
+     * 给定作为参数传递的各种参数，执行实际日志记录。
      * 
      * <p>This method assumes that the separation of the args array into actual
      * objects and a throwable has been already operated.
